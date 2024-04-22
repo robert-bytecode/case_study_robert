@@ -5,16 +5,16 @@ view: users_with_returns {
       where status="Returned" order by 1 ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
-
   dimension: user_id_return {
     type: number
     primary_key: yes
     sql: ${TABLE}.user_id_return ;;
     value_format_name: id
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [detail*]
   }
 
   set: detail {
