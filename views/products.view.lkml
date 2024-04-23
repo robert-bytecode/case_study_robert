@@ -22,13 +22,23 @@ view: products {
     }
     link: {
       label: "View Brand Details"
-      url: "https://looker.bytecode.io/dashboards/7D9btkie93hdvtwC6SdW6X?Product%20ID={{ value }}"
+      url: "https://looker.bytecode.io/dashboards/7D9btkie93hdvtwC6SdW6X?Brand={{ value | url_encode }}"
     }
   }
 
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
+  link: {
+    label: "Google Search"
+    url: "https://www.google.com/search?q={{ value }}"
+    icon_url: "https://www.google.com/favicon.ico"
+  }
+  link: {
+    label: "Facebook Search"
+    url: "https://www.facebook.com/search/top/?q={{ value }}"
+    icon_url: "https://facebook.com/favicon.ico"
+  }
     link: {
       label: "View Category Details"
       url: "https://looker.bytecode.io/dashboards/7D9btkie93hdvtwC6SdW6X?Category={{ value | url_encode }}"
