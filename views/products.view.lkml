@@ -20,12 +20,19 @@ view: products {
       url: "https://www.facebook.com/search/top/?q={{ value }}"
       icon_url: "https://facebook.com/favicon.ico"
     }
+    link: {
+      label: "View Brand Details"
+      url: "https://looker.bytecode.io/dashboards/7D9btkie93hdvtwC6SdW6X?Product%20ID={{ value }}"
+    }
   }
-
 
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
+    link: {
+      label: "View Category Details"
+      url: "https://looker.bytecode.io/dashboards/7D9btkie93hdvtwC6SdW6X?Category={{ value | url_encode }}"
+    }
   }
 
   dimension: cost {

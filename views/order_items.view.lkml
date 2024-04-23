@@ -9,13 +9,15 @@ view: order_items {
 
   dimension_group: created {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, hour_of_day, date, day_of_week, day_of_week_index, day_of_month,
+            day_of_year, week, week_of_year, month, month_name, month_num, quarter, year]
     sql: ${TABLE}.created_at ;;
   }
 
   dimension_group: delivered {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, hour_of_day, date, day_of_week, day_of_week_index, day_of_month,
+            day_of_year, week, week_of_year, month, month_name, month_num, quarter, year]
     sql: ${TABLE}.delivered_at ;;
   }
 
@@ -38,7 +40,8 @@ view: order_items {
 
   dimension_group: returned {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, hour_of_day, date, day_of_week, day_of_week_index, day_of_month,
+            day_of_year, week, week_of_year, month, month_name, month_num, quarter, year]
     sql: ${TABLE}.returned_at ;;
   }
 
@@ -49,7 +52,8 @@ view: order_items {
 
   dimension_group: shipped {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, hour_of_day, date, day_of_week, day_of_week_index, day_of_month,
+            day_of_year, week, week_of_year, month, month_name, month_num, quarter, year]
     sql: ${TABLE}.shipped_at ;;
   }
 
@@ -136,6 +140,12 @@ view: order_items {
   measure: total_orders {
     type: count_distinct
     sql: ${order_id} ;;
+    drill_fields: [product_detail*, total_orders]
+  }
+
+  measure: total_units_sold {
+    type: count_distinct
+    sql: ${id} ;;
     drill_fields: [product_detail*, total_orders]
   }
 
