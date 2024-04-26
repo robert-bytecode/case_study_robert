@@ -103,6 +103,24 @@ view: products {
     drill_fields: [product_detail*, average_revenue]
   }
 
+  # measure: average_category_revenue {
+  #   type: average
+  #   hidden: no
+  #   sql: ${retail_price} ;;
+  #   value_format_name: usd_0
+  #   drill_fields: [product_detail*, average_revenue]
+  #   label: "Average Category Revenue"
+  # }
+
+  # measure: average_category_revenue {
+  #   type: number
+  #   hidden: no
+  #   sql: AVG(${retail_price}) OVER (PARTITION BY ${category}) ;;
+  #   value_format_name: usd_0
+  #   drill_fields: [product_detail*, average_revenue]
+  #   label: "Average Category Revenue"
+  # }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -136,12 +154,56 @@ view: products {
     drill_fields: [product_detail*, total_gross_margin]
   }
 
+  # measure: total_category_revenue {
+  #   type: number
+  #   sql: SUM(${retail_price}) OVER (PARTITION BY ${category}) ;;
+  #   value_format_name: usd_0
+  #   label: "Total Category Revenue"
+  # }
+
   measure: total_revenue {
     type: number
     sql: sum(${retail_price}) ;;
     value_format_name: usd_0
     drill_fields: [product_detail*, total_revenue]
   }
+
+  measure: brand_revenue {
+    type: sum
+    sql:
+    {% if brand._is_filtered %}
+      CASE WHEN {% condition brand %} ${brand} {% endcondition %} THEN ${retail_price} ELSE 0 END
+    {% else %}
+      ${retail_price}
+    {% endif %}
+  ;;
+    value_format_name: usd_0
+    drill_fields: [product_detail*, total_revenue]
+  }
+
+  measure: selected_brand_revenue {
+    type: sum
+    sql: CASE
+         WHEN {% condition brand %} ${brand} {% endcondition %}
+         THEN ${retail_price}
+         ELSE 0
+       END ;;
+    label: "Selected Brand Revenue"
+    value_format_name: usd_0
+    drill_fields: [product_detail*, total_revenue]
+  }
+
+  # measure: selected_category_revenue {
+  #   type: sum
+  #   sql: CASE
+  #       WHEN {% condition brand %} ${category} {% endcondition %}
+  #       THEN ${retail_price}
+  #       ELSE 0
+  #     END ;;
+  #   label: "Selected Category Revenue"
+  #   value_format_name: usd_0
+  #   drill_fields: [product_detail*, total_revenue]
+  # }
 
   set: detail {
     fields: [

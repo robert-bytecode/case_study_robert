@@ -67,4 +67,14 @@ explore: order_items {
     sql_on: ${events.id}= ${order_sequence.id} ;;
     relationship: one_to_one
   }
+  join: category_averages {
+    type: left_outer
+    sql_on: ${products.category}=${category_averages.category} ;;
+    relationship: many_to_one
+  }
+  join: cv_category_averages {
+    type: left_outer
+    sql:;;
+  relationship: one_to_one
+}
 }
