@@ -161,6 +161,7 @@ view: products {
   #   label: "Total Category Revenue"
   # }
 
+
   measure: total_revenue {
     type: number
     sql: sum(${retail_price}) ;;
