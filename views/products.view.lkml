@@ -82,6 +82,13 @@ view: products {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: selected_brand {
+    type: string
+    hidden: yes
+    sql: {% condition ${brand} %} ${brand} {% endcondition %};;
+    # Ensure to replace `${TABLE}.brand` with the actual field and table that corresponds to the brand in your database schema.
+  }
+
   measure: average_cost {
     type: number
     sql: sum(${cost})/count(${id}) ;;
